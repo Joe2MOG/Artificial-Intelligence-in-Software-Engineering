@@ -11,7 +11,7 @@ Scenario A – Arithmetic macro (MAX).
 - `screenshot_generator.png` – AI generation of debug macro.
 
 ## AI Tool Used
-[ChatGPT / Gemini – specify which one you used]
+Gemini
 
 ## Reflection
 Using AI as a preprocessor co‑pilot helped catch subtle macro bugs that would have been hard to find manually. The AI explained operator precedence and double‑evaluation issues clearly, turning a risky macro into a safe one.
