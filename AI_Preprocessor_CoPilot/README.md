@@ -1,5 +1,8 @@
-#AI: Pre-processor Co-pilot
+# AI: C Preprocessor Co‑Pilot
 
-Objective:
-Demonstrate the practical application of AI as a Macro Safety Inspector
-and Conditional Code Generator to manage the complexity and common pitfalls of the C Preprocessor.
+## Scenario
+Scenario A – Arithmetic macro (MAX).
+
+## Flawed Macro
+```c
+#define MAX(a, b) a > b ? a : b
