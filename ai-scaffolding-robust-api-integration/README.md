@@ -22,10 +22,12 @@ generic refactoring request.
 
 ## Verification
 Ran the refactored script with a dummy API key
-(`TEXT_PROCESSING_API_KEY=DUMMY_KEY`). The request reached the
-real API and was rejected with `403 Forbidden`, correctly caught
-by the existing `HTTPError` handler. Independently confirmed via
-Python's class hierarchy that `Timeout` and `ConnectionError` both
-inherit from `RequestException`, verifying the new exception
-handlers are correctly ordered above the general case rather than
-being unreachable dead code.
+(`TEXT_PROCESSING_API_KEY=DUMMY_KEY`). A real ConnectionError
+(SSL certificate mismatch, caused by network-level HTTPS
+inspection) was correctly caught by the new dedicated
+ConnectionError handler, printing a clear message to stderr and
+exiting with status 1. Independently confirmed via Python's class
+hierarchy that Timeout and ConnectionError both inherit from
+RequestException, verifying the new exception handlers are
+correctly ordered above the general case rather than being
+unreachable dead code.
