@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Box Model & Display Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+
+        /* 
+           Specific styles for Box 1 to visualize the box model areas.
+           We use background-clip to separate the content box color from the padding box color.
+        */
+        #box1 {
+            background-image: linear-gradient(#93c5fd, #93c5fd), linear-gradient(#bbf7d0, #bbf7d0);
+            background-clip: content-box, padding-box;
+            border-style: solid;
+            border-color: #fde047;
+            box-sizing: content-box; /* Crucial for standard box model visualization */
+            
+            /* Center text for aesthetics */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #1e3a8a;
+            transition: all 0.1s ease;
+        }
+
+        #box2 {
+            display: inline-block;
+            background-color: #e5e7eb; /* Light gray */
+            padding: 20px;
+            border: 2px solid #9ca3af;
+            font-weight: 600;
+            color: #374151;
+            /* Added smooth transitions for when Box 1 moves it around */
+            transition: all 0.1s ease;
+        }
+
+        /* Custom styling for sliders */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: #3b82f6;
+            cursor: pointer;
+            margin-top: -6px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 6px;
+            cursor: pointer;
+            background: #d1d5db;
+            border-radius: 3px;
+        }
+        input[type=range]:focus {
+            outline: none;
+        }
+        input[type=range]:focus::-webkit-slider-runnable-track {
+            background: #9ca3af;
+        }
+    </style>
+</head>
+<body class="min-h-screen text-gray-800 p-4 sm:p-6 lg:p-8">
+
+    <div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-6 h-full min-h-[calc(100vh-4rem)]">
+        
+        <!-- Controls Column -->
+        <div class="w-full lg:w-1/3 bg-white rounded-xl shadow-lg border border-gray-200 p-6 flex flex-col gap-6">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-900 mb-1">Box Model Controls</h1>
+                <p class="text-sm text-gray-500">Adjust the properties below to see how they affect Box 1.</p>
+            </div>
+
+            <!-- Width Control -->
+            <div class="flex flex-col gap-2">
+                <div class="flex justify-between items-center">
+                    <label for="width-slider" class="font-medium text-sm text-gray-700">Width</label>
+                    <span id="width-val" class="text-sm font-mono bg-gray-100 px-2 py-1 rounded">100px</span>
+                </div>
+                <input type="range" id="width-slider" min="0" max="300" value="100">
+            </div>
+
+            <!-- Padding Control -->
+            <div class="flex flex-col gap-2">
+                <div class="flex justify-between items-center">
+                    <label for="padding-slider" class="font-medium text-sm text-gray-700">Padding</label>
+                    <span id="padding-val" class="text-sm font-mono bg-gray-100 px-2 py-1 rounded">20px</span>
+                </div>
+                <input type="range" id="padding-slider" min="0" max="100" value="20">
+            </div>
+
+            <!-- Border Control -->
+            <div class="flex flex-col gap-2">
+                <div class="flex justify-between items-center">
+                    <label for="border-slider" class="font-medium text-sm text-gray-700">Border Width</label>
+                    <span id="border-val" class="text-sm font-mono bg-gray-100 px-2 py-1 rounded">10px</span>
+                </div>
+                <input type="range" id="border-slider" min="0" max="50" value="10">
+            </div>
+
+            <!-- Margin Control -->
+            <div class="flex flex-col gap-2">
+                <div class="flex justify-between items-center">
+                    <label for="margin-slider" class="font-medium text-sm text-gray-700">Margin</label>
+                    <span id="margin-val" class="text-sm font-mono bg-gray-100 px-2 py-1 rounded">20px</span>
+                </div>
+                <input type="range" id="margin-slider" min="0" max="100" value="20">
+            </div>
+
+            <!-- Display Control -->
+            <div class="flex flex-col gap-2 mt-2">
+                <label for="display-select" class="font-medium text-sm text-gray-700">Display Property</label>
+                <select id="display-select" class="block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    <option value="block" selected>block</option>
+                    <option value="inline-block">inline-block</option>
+                    <option value="inline">inline</option>
+                </select>
+            </div>
+            
+            <div class="mt-auto pt-6 border-t border-gray-100 text-xs text-gray-400">
+                Notice how inline elements ignore width and top/bottom margins regarding layout flow.
+            </div>
+        </div>
+
+        <!-- Visualization Column -->
+        <div class="w-full lg:w-2/3 bg-white rounded-xl shadow-lg border border-gray-200 p-6 flex flex-col">
+            
+            <!-- Color Legend -->
+            <div class="mb-4 flex flex-wrap gap-3">
+                <div class="flex items-center gap-2">
+                    <div class="w-4 h-4 rounded bg-blue-300 border border-blue-400"></div>
+                    <span class="text-sm font-medium text-gray-600">Content</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <div class="w-4 h-4 rounded bg-green-200 border border-green-400"></div>
+                    <span class="text-sm font-medium text-gray-600">Padding</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <div class="w-4 h-4 rounded bg-yellow-300 border border-yellow-500"></div>
+                    <span class="text-sm font-medium text-gray-600">Border</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <div class="w-4 h-4 rounded bg-orange-200 border border-orange-400"></div>
+                    <span class="text-sm font-medium text-gray-600">Margin Space</span>
+                </div>
+            </div>
+
+            <!-- Visualization Container -->
+            <!-- The light orange background reveals the margin space of Box 1 -->
+            <div class="bg-orange-200 flex-grow rounded-lg overflow-auto border-2 border-dashed border-orange-400 p-0 relative min-h-[400px]">
+                <!-- Interactive Box -->
+                <div id="box1">Box 1</div>
+                
+                <!-- Static Reference Box -->
+                <div id="box2">Box 2</div>
+            </div>
+            
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // DOM Elements
+            const box1 = document.getElementById('box1');
+            
+            const widthSlider = document.getElementById('width-slider');
+            const paddingSlider = document.getElementById('padding-slider');
+            const borderSlider = document.getElementById('border-slider');
+            const marginSlider = document.getElementById('margin-slider');
+            const displaySelect = document.getElementById('display-select');
+            
+            const widthVal = document.getElementById('width-val');
+            const paddingVal = document.getElementById('padding-val');
+            const borderVal = document.getElementById('border-val');
+            const marginVal = document.getElementById('margin-val');
+
+            // Update function
+            function updateBoxModel() {
+                // Get current values from controls
+                const width = widthSlider.value;
+                const padding = paddingSlider.value;
+                const border = borderSlider.value;
+                const margin = marginSlider.value;
+                const display = displaySelect.value;
+
+                // Update Labels
+                widthVal.textContent = `${width}px`;
+                paddingVal.textContent = `${padding}px`;
+                borderVal.textContent = `${border}px`;
+                marginVal.textContent = `${margin}px`;
+
+                // Update Box 1 Styles
+                box1.style.width = `${width}px`;
+                // If it's inline, let's keep the text centered vertically if possible, but inline ignores height anyway.
+                // We'll set a default minimum height/content so the content box doesn't collapse entirely if empty, 
+                // but setting line-height or standard height helps. We rely on the text 'Box 1' for content height.
+                box1.style.padding = `${padding}px`;
+                box1.style.borderWidth = `${border}px`;
+                box1.style.margin = `${margin}px`;
+                box1.style.display = display;
+                
+                // Note: For inline elements, width and top/bottom margin don't affect standard layout flow,
+                // which is exactly what this tool demonstrates!
+            }
+
+            // Event Listeners for real-time updates
+            widthSlider.addEventListener('input', updateBoxModel);
+            paddingSlider.addEventListener('input', updateBoxModel);
+            borderSlider.addEventListener('input', updateBoxModel);
+            marginSlider.addEventListener('input', updateBoxModel);
+            displaySelect.addEventListener('change', updateBoxModel);
+
+            // Initialize on load
+            updateBoxModel();
+        });
+    </script>
+</body>
+</html>
